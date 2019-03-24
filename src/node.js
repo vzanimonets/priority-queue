@@ -39,10 +39,42 @@ class Node {
   }
 
   swapWithParent() {
-    if ((this.parent = !null)) {
-      
+    if (this.parent != null) {
+      const leftParent = this.parent.left;
+      const rightParent = this.parent.right;
+      const parentParent = this.parent.parent;
+      const nodeChild = this.parent;
+
+      nodeChild.left = this.left;
+      if (nodeChild.left) {
+        nodeChild.left.parent = nodeChild;
+      }
+      nodeChild.right = this.right;
+      if (nodeChild.right) {
+        nodeChild.right.parent = nodeChild;
+      }
+      nodeChild.parent = this;
+      if (leftParent === this) {
+        this.left = nodeChild;
+      } else {
+        this.left = leftParent;
+      }
+
+      if (this.left) this.left.parent = this;
+      if (rightParent === this) {
+        this.right = nodeChild;
+      } else {
+        this.right = rightParent;
+      }
+      if (this.right) this.right.parent = this;
+      this.parent = parentParent;
+      if (this.parent && this.parent.left === nodeChild) {
+        this.parent.left = this;
+      }
+      if (this.parent && this.parent.right === nodeChild) {
+        this.parent.right = this;
+      }
     }
   }
 }
-
 module.exports = Node;
