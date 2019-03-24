@@ -33,7 +33,20 @@ class MaxHeap {
     this.sizeHeap = 0;
   }
 
-  insertNode(node) {}
+  insertNode(node) {
+    if (this.root === null) {
+      this.root = node;
+      this.parentNodes.push(node);
+      this.sizeHeap++;
+      return;
+    }
+    this.parentNodes[0].appendChild(node);
+    this.parentNodes.push(node);
+    if (this.parentNodes[0].left && this.parentNodes[0].right) {
+      this.parentNodes.shift();
+    }
+    this.sizeHeap++;
+  }
 
   shiftNodeUp(node) {}
 
